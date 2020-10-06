@@ -4,6 +4,7 @@ import { timeRecords, fakeData } from './../fakeData'
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import { useTable, usePagination } from 'react-table'
+import { v4 as uuidv4 } from 'uuid'
 
 const StyledTable = styled.table`
   border-spacing: 0;
@@ -40,19 +41,15 @@ const Input = styled.input({
 
 // Create an editable cell renderer
 const EditableCell = ({
-  value: initialValue,
+  value: initialValue = '',
   row: { index },
   column: { id },
   updateMyData,
-  deleteRow, // This is a custom function that we supplied to our table instance
 }) => {
-  // We need to keep and update the state of the cell normally
   const [value, setValue] = useState(initialValue)
   const onChange = (e) => setValue(e.target.value)
-  // We'll only update the external data when the input is blurred
   const onBlur = () => updateMyData(index, id, value)
 
-  // If the initialValue is changed external, sync it up with our state
   React.useEffect(() => {
     setValue(initialValue)
   }, [initialValue])
@@ -160,8 +157,7 @@ export default function Home() {
   )
   const [data, setData] = useState(fakeData)
 
-  console.log(timeRecords)
-  console.log('fakeData', JSON.stringify(fakeData, null, 2))
+  // console.log('fakeData', JSON.stringify(fakeData, null, 2))
 
   const updateMyData = (rowIndex, columnId, value) => {
     setData((old) =>
@@ -182,7 +178,7 @@ export default function Home() {
     setData((data) => [
       ...data,
       {
-        id: '244444',
+        id: uuidv4(),
       },
     ])
 
