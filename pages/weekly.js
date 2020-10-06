@@ -69,7 +69,7 @@ function Table({ columns, data, updateMyData, deleteRow }) {
     getTableBodyProps,
     headerGroups,
     prepareRow,
-    page,
+    rows,
   } = useTable(
     {
       columns,
@@ -95,7 +95,7 @@ function Table({ columns, data, updateMyData, deleteRow }) {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {page.map((row, i) => {
+          {rows.map((row, i) => {
             prepareRow(row)
             return (
               <tr {...row.getRowProps()}>
